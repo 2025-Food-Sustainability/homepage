@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Sustainability: Share Your Voice</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts for a nicer look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Use the Poppins font family for a clean, modern feel */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Simple transition for the message paragraph */
+        #form-message {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Main container with a full-screen background image -->
+    <div class="relative min-h-screen bg-cover bg-center flex items-center justify-center px-4 py-8" style="background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=2070&auto=format&fit=crop');">
+        <!-- 
+          You can easily change the background image URL above. 
+          Find high-quality, royalty-free images on sites like unsplash.com, pexels.com, or pixabay.com.
+        -->
+
+        <!-- Dark overlay for better text readability over the background image -->
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+
+        <!-- Centered content card -->
+        <div class="relative z-10 max-w-2xl w-full bg-white bg-opacity-90 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-2xl text-center">
+
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                Help Shape a Sustainable Food Future
+            </h1>
+            
+            <p class="text-lg text-gray-700 mb-8">
+                Our food choices have a powerful impact on the planet. To better understand community perspectives on food sustainability, we invite you to participate in our short survey. Your input is invaluable and will contribute to meaningful research.
+            </p>
+
+            <!-- The primary call-to-action button -->
+            <a href="#" id="take-survey-btn" class="inline-block bg-green-600 text-white font-bold text-lg px-8 py-4 rounded-full hover:bg-green-700 transition-transform transform hover:scale-105 shadow-lg">
+                <!-- The JavaScript below will set the correct link for this button -->
+                Take the 5-Minute Survey
+            </a>
+
+            <!-- Divider and section for email updates -->
+            <div class="mt-12 pt-8 border-t border-gray-300">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-3">Stay Informed</h2>
+                <p class="text-gray-600 mb-6">
+                    Enter your email to receive the full report and our findings. We will complete the survey and publish the results by the <strong class="text-green-700">25th of August 2025</strong>.
+                </p>
+
+                <!-- Email subscription form -->
+                <form id="subscribe-form" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" id="email-input" placeholder="your.email@example.com" required class="flex-grow w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition">
+                    <button type="submit" class="bg-gray-800 text-white font-bold px-6 py-3 rounded-lg hover:bg-gray-900 transition-transform transform hover:scale-105 shadow-md">
+                        Keep Me Updated
+                    </button>
+                </form>
+                <!-- This paragraph is used to display success or error messages from the form -->
+                <p id="form-message" class="mt-4 text-sm h-5"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plain Old JavaScript for interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('subscribe-form');
+            const emailInput = document.getElementById('email-input');
+            const formMessage = document.getElementById('form-message');
+            const surveyButton = document.getElementById('take-survey-btn');
+
+            // --- IMPORTANT ---
+            // Set your survey link here. Replace the '#' with your actual survey URL (e.g., from Google Forms, SurveyMonkey, etc.)
+            const surveyLink = '#'; 
+            
+            // Set the button's link dynamically
+            surveyButton.href = surveyLink;
+            // If the link is just a placeholder, prevent the user from clicking it
+            if (surveyLink === '#') {
+                surveyButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('Please update the survey link in the HTML code.');
+                });
+            }
+
+
+            // Handle the email subscription form submission
+            form.addEventListener('submit', (event) => {
+                event.preventDefault(); // Stop the form from submitting the traditional way
+
+                const email = emailInput.value.trim();
+
+                // A simple regular expression to validate the email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (emailRegex.test(email)) {
+                    // On successful validation
+                    formMessage.textContent = "Thank you! You've been added to the list.";
+                    formMessage.style.color = '#16a34a'; // A nice green color
+                    emailInput.style.borderColor = '#22c55e'; // Tailwind's green-500
+                    
+                    // Clear the input and disable the form to prevent multiple submissions
+                    emailInput.value = '';
+                    const submitButton = form.querySelector('button');
+                    submitButton.disabled = true;
+                    submitButton.style.opacity = '0.7';
+                    submitButton.style.cursor = 'not-allowed';
+                    submitButton.textContent = 'Submitted!';
+
+                } else {
+                    // On validation failure
+                    formMessage.textContent = 'Please enter a valid email address.';
+                    formMessage.style.color = '#dc2626'; // A nice red color
+                    emailInput.style.borderColor = '#ef4444'; // Tailwind's red-500
+                }
+            });
+
+            // Reset the message and border color when the user starts typing again for a better user experience
+            emailInput.addEventListener('input', () => {
+                if (formMessage.textContent !== '') {
+                    formMessage.textContent = '';
+                    emailInput.style.borderColor = '#d1d5db'; // Tailwind's gray-300
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
