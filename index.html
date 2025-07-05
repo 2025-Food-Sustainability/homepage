@@ -171,44 +171,6 @@
             }
 
 
-            // Handle the email subscription form submission
-            form.addEventListener('submit', (event) => {
-                event.preventDefault(); // Stop the form from submitting the traditional way
-
-                const email = emailInput.value.trim();
-
-                // A simple regular expression to validate the email format
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                if (emailRegex.test(email)) {
-                    // On successful validation
-                    formMessage.textContent = "Thank you! You've been added to the list.";
-                    formMessage.style.color = '#16a34a'; // A nice green color
-                    emailInput.style.borderColor = '#22c55e'; // Tailwind's green-500
-                    
-                    // Clear the input and disable the form to prevent multiple submissions
-                    emailInput.value = '';
-                    const submitButton = form.querySelector('button');
-                    submitButton.disabled = true;
-                    submitButton.style.opacity = '0.7';
-                    submitButton.style.cursor = 'not-allowed';
-                    submitButton.textContent = 'Submitted!';
-
-                } else {
-                    // On validation failure
-                    formMessage.textContent = 'Please enter a valid email address.';
-                    formMessage.style.color = '#dc2626'; // A nice red color
-                    emailInput.style.borderColor = '#ef4444'; // Tailwind's red-500
-                }
-            });
-
-            // Reset the message and border color when the user starts typing again for a better user experience
-            emailInput.addEventListener('input', () => {
-                if (formMessage.textContent !== '') {
-                    formMessage.textContent = '';
-                    emailInput.style.borderColor = '#d1d5db'; // Tailwind's gray-300
-                }
-            });
         });
     </script>
 
